@@ -16,7 +16,8 @@ const Login = () => {
 		e.preventDefault();
 		// ChatWindowコンポーネントに移動
 		if (loginName.trim()) {
-			navigate("/chat");
+			// loginNameをURLパラメーターとしてChatWindowに渡す
+			navigate(`/chat?name=${loginName}`);
 		}
 	};
 
@@ -25,8 +26,8 @@ const Login = () => {
 		<div>
 			<p>login: </p>
 			<form onSubmit={handleFormSubmit}>
-				<input 
-					type="text" 
+				<input
+					type="text"
 					value={loginName}
 					onChange={handleInputChange}
 				/>
