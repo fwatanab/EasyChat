@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import MessageList from "./MessageList";
 import MessageInput from "./MessageInput";
 
@@ -6,6 +7,13 @@ const ChatWindow = () => {
 
 	const [messages, setMessages] = useState([]);
 	const ws = useRef(null);
+
+	// 現在のURLを取得
+	const location = useLocation();
+	// URLのクエリパラメーターを解析
+	const queryParams = new URLSearchParams(location.search);
+	// クエリパラメーターからloginNameを取得
+	const loginName = queryParams.get("name");
 
 	useEffect(() => {
 		// WebSocket接続を作成し、サーバーのエンドポイントに接続
@@ -44,6 +52,7 @@ const ChatWindow = () => {
 
 	return (
 		<div className="chat-window">
+			<p>{loginName}</p>
 			<MessageList messages={messages} />
 			<MessageInput addMessage={addMessage}/>
 		</div>
