@@ -1,10 +1,11 @@
 import React from "react";
 
-const Message = ({ message, loginName }) => {
+const Message = ({ message }) => {
+
 	return (
 		<div className="message">
 			<li>
-				<strong>{loginName}: </strong>{message}
+				<strong>{message.name}: </strong>{message.inputMessage}
 			</li>
 		</div>
 	);

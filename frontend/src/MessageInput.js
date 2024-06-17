@@ -1,20 +1,22 @@
 import React, { useRef } from "react";
 
-const MessageInput = ({ addMessage }) => {
+const MessageInput = ({ addMessage, loginName }) => {
 
 	const inputMessage = useRef();
 
-	const sendMessage = () => {
-		if (inputMessage.current.value.trim() !== "") {
-			addMessage(inputMessage.current.value);
+	const handleSendMessage = (e) => {
+		e.preventDefault();
+		const message = inputMessage.current.value.trim();
+		if (message) {
+			addMessage(loginName, message);
 			inputMessage.current.value = "";
 		}
 	};
 
 	return (
 		<div className="message-input">
-			<input type="text" ref={inputMessage}/>
-			<button onClick={sendMessage}>送信</button>
+			<input type="text" ref={inputMessage} />
+			<button type="submit" onClick= {handleSendMessage}>送信</button>
 		</div>
 	);
 };
