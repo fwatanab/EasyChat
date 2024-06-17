@@ -1,0 +1,51 @@
+/* ログイン画面全体のスタイル */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #222222;
+  color: white;
+}
+
+.login-form {
+  width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #333333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.login-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #555555;
+  border-radius: 5px;
+  background: #444444;
+  color: white;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #6600ff;
+  color: white;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background: #5500cc;
+}
+
+.login-form button:active {
+  background: #440099;
+}
+
