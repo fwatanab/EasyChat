@@ -53,7 +53,7 @@ const ChatWindow = () => {
 	return (
 		<div className="chat-window">
 			<p>{loginName}</p>
-			<MessageList messages={messages} />
+			<MessageList messages={messages} loginName={loginName} />
 			<MessageInput addMessage={addMessage}/>
 		</div>
 	);

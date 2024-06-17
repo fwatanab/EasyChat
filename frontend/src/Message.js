@@ -1,9 +1,11 @@
 import React from "react";
 
-const Message = ({ message }) => {
+const Message = ({ message, loginName }) => {
 	return (
 		<div className="message">
-			<li>{message}</li>
+			<li>
+				<strong>{loginName}: </strong>{message}
+			</li>
 		</div>
 	);
 };
