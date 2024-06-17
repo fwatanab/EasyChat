@@ -27,8 +27,12 @@ const ChatWindow = () => {
 		ws.current.onmessage = (event) => {
 			// 受信したメッセージをJSONにパース
 			const message = JSON.parse(event.data);
+
+			// デバッグ用ログ
+//			console.log(message);
+
 			// 受信したメッセージをメッセージリストに追加
-			setMessages((prevMessages) => [...prevMessages, message.Message]);
+			setMessages((prevMessages) => [...prevMessages, message]);
 		};
 
 		ws.current.onerror = (error) => {
@@ -45,16 +49,21 @@ const ChatWindow = () => {
 		};
 	}, []);
 
-	const addMessage = (message) => {
+	const addMessage = (name, inputMessage) => {
+		const message = {name, inputMessage};
+
+		// デバッグ用ログ
+//		console.log(message);
+
 		// メッセージをサーバーに送信
-		ws.current.send(JSON.stringify({ message }));
+		ws.current.send(JSON.stringify(message));
 	};
 
 	return (
 		<div className="chat-window">
 			<p>{loginName}</p>
-			<MessageList messages={messages} loginName={loginName} />
-			<MessageInput addMessage={addMessage}/>
+			<MessageList messages={messages} />
+			<MessageInput addMessage={addMessage} loginName={loginName}/>
 		</div>
 	);
 };
