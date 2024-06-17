@@ -12,40 +12,41 @@ html, body {
   box-sizing: border-box;
 }
 
+/* アプリケーション全体のコンテナ */
 .App {
   text-align: center;
   background: #222222;
   color: white;
   font-family: Arial, sans-serif;
-  height: 100vh;
+  height: 100vh; /* ビューポートの高さいっぱいに表示 */
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* 子要素を縦方向に配置 */
 }
 
 /* チャットウィンドウのスタイル */
 .chat-window {
-  flex: 1;
+  flex: 1; /* 他の要素より残りの高さを占める */
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 80%; /* PCサイズに適した幅 */
-  max-width: 800px; /* 最大幅 */
-  margin: 0 auto; /* 中央に配置 */
+  flex-direction: column; /* 子要素を縦方向に配置 */
+  justify-content: space-between; /* 上下に均等に配置 */
+  width: 80%; /* 幅は80% */
+  max-width: 800px; /* 最大幅を800pxに制限 */
+  margin: 0 auto; /* 水平方向に中央に配置 */
   padding: 20px;
   border: 1px solid #444444;
   border-radius: 10px;
   background: #333333;
-  overflow: hidden; /* 追加 */
-  position: relative; /* 追加 */
+  overflow: hidden; /* 内容がはみ出たときにスクロールバーを表示 */
+  position: relative; /* 相対配置を指定 */
 }
 
 /* ログイン名のスタイル */
 .login-name {
-  position: fixed;
-  top: 20px; /* 画面の上部からの距離 */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
+  position: fixed; /* 固定配置 */
+  top: 20px; /* 上からの位置 */
+  left: 50%; /* 左から50%の位置 */
+  transform: translateX(-50%); /* 中央に配置 */
+  z-index: 1000; /* 最前面に表示 */
   background: #333333;
   padding: 10px;
   border-radius: 5px;
@@ -55,7 +56,7 @@ html, body {
 .message-list {
   list-style: none;
   flex: 1;
-  overflow-y: auto; /* 縦方向のスクロールを有効化 */
+  overflow-y: auto; /* 縦方向にスクロール可能 */
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -77,12 +78,12 @@ html, body {
 /* メッセージ入力部分のスタイル */
 .message-input-container {
   position: fixed;
-  bottom: 20px; /* 画面の下部からの距離 */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  width: 80%; /* PCサイズに適した幅 */
-  max-width: 800px; /* 最大幅 */
+  bottom: 20px; /* 下からの位置 */
+  left: 50%; /* 左から50%の位置 */
+  transform: translateX(-50%); /* 中央に配置 */
+  z-index: 1000; /* 最前面に表示 */
+  width: 80%; /* 幅は80% */
+  max-width: 800px; /* 最大幅は800px */
   background: #333333;
   padding: 10px;
   border-radius: 5px;
@@ -134,5 +135,24 @@ html, body {
 
 .message-list::-webkit-scrollbar-track {
   background: #333333;
+}
+
+/* スマートフォンサイズでの表示 */
+@media (max-width: 768px) {
+  .App {
+    padding: 10px; /* パディングを追加してコンテンツが端に寄りすぎないように */
+  }
+
+  .chat-window {
+    width: 100%; /* 幅を100%にして画面いっぱいに広がるように */
+    border-radius: 0; /* 角を丸めない */
+  }
+
+  .message-input-container {
+    width: 100%; /* 幅を100%にして画面いっぱいに広がるように */
+    border-radius: 0; /* 角を丸めない */
+    bottom: 0; /* 下からの位置 */
+    transform: none; /* 位置の調整をリセット */
+  }
 }
 
