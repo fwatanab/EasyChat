@@ -14,10 +14,10 @@ const MessageInput = ({ addMessage, loginName }) => {
 	};
 
 	return (
-		<div className="message-input">
+		<form onSubmit={handleSendMessage} className="message-input">
 			<input type="text" ref={inputMessage} />
 			<button type="submit" onClick= {handleSendMessage}>送信</button>
-		</div>
+		</form>
 	);
 };
 
