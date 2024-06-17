@@ -26,7 +26,8 @@ var broadcast = make(chan Message)
 
 // WebSocketで送受信されるメッセージの構造体
 type Message struct {
-	Message string "json: message"
+	Name         string `json:"name"`
+	InputMessage string `json:"inputMessage"`
 }
 
 // 新しいWebSocket接続を処理
@@ -50,9 +51,15 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 			delete(clients, ws)
 			break
 		}
+
+		// デバッグ用プリント
+		//		log.Printf("Received message: %+v", msg)
+		//		log.Printf("name: %s message: %s\n", msg.Name, msg.InputMessage)
+
 		// 受け取ったメッセージをbroadcastチャネルに送信
 		broadcast <- msg
 	}
+	delete(clients, ws)
 }
 
 // ブロードキャストされたメッセージをすべてのクライアントに送信
