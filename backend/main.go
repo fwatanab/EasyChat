@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// // データベース接続を初期化
-	database.InitDB("root:Ftsg0601_348441@tcp(127.0.0.1:3306)/")
+	database.InitDB("user:password@tcp(127.0.0.1:3306)/")
 
 	// 定期的にメンテナンス処理を実行
 	go func() {
