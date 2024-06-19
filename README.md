@@ -18,18 +18,23 @@ MySQL / React / HTML, CSS, JavaScript
    ```bash
    git clone https://github.com/fwatanab/EasyChat.git
 
-2. バックエンドサーバーを起動します：
+2. 自身のMySQLデータベースのユーザー名、パスワードに置き換える：  
+main.go: 13行目
+   ```bash
+   database.InitDB("user:password@tcp(127.0.0.1:3306)/")
+
+3. バックエンドサーバーを起動します：
 
    ```bash
    cd EasyChat/backend
    go mod tidy
    go run main.go
    
-3. フロントエンドサーバーを起動します：
+4. フロントエンドサーバーを起動します：
 
    ```bash
    cd EasyChat/frontend
    npm install
    npm start
 
-4. ブラウザを開いて、http://localhost:3000 にアクセスしてチャットアプリケーションを使用します。
+5. ブラウザを開いて、http://localhost:3000 にアクセスしてチャットアプリケーションを使用します。
