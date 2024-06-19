@@ -26,6 +26,16 @@ func AddMessage(userID int64, message string) error {
 	return nil
 }
 
+func GetTime(userID int64) (string, error) {
+	query := "SELECT timestamp FROM list WHERE id = ?"
+	var time string
+	err := DB.QueryRow(query, userID).Scan(&time)
+	if err != nil {
+		return "", err
+	}
+	return time, nil
+}
+
 func GetUserID(name string) (int64, error) {
 	query := "SELECT id FROM list WHERE name = ? ORDER BY timestamp DESC LIMIT 1"
 	var id int64
@@ -58,4 +68,13 @@ func GetMessages() ([]models.Message, error) {
 		return nil, err
 	}
 	return message, nil
+}
+
+func DeleteOldMessages(daysAgo int) error {
+	query := "DELETE FROM list WHERE timestamp <= DATE_SUB(NOW(), INTERVAL ? DAY)"
+	_, err := DB.Exec(query, daysAgo)
+	if err != nil {
+		return err
+	}
+	return nil
 }
