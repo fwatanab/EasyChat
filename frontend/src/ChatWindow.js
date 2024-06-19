@@ -32,7 +32,11 @@ const ChatWindow = () => {
 //			console.log(message);
 
 			// 受信したメッセージをメッセージリストに追加
-			setMessages((prevMessages) => [...prevMessages, message]);
+			if (Array.isArray(message)) {
+				setMessages(message);
+			} else {
+				setMessages((prevMessages) => [...prevMessages, message]);
+			}
 		};
 
 		ws.current.onerror = (error) => {
