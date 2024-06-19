@@ -6,7 +6,6 @@ import (
 
 // 新しいユーザーをデータベースに追加
 func AddUser(name string) error {
-	//	query := "INSERT INTO list (name) VALUE (?)"
 	query := "INSERT INTO list (name, message) VALUES (?, '')"
 
 	_, err := DB.Exec(query, name)
