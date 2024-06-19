@@ -71,6 +71,14 @@ html, body {
   background: #555555;
 }
 
+/* タイムスタンプのスタイル */
+.timestamp {
+  bottom: -20px; /* 下からの位置 */
+  right: 5px; /* 右からの位置 */
+  font-size: 0.8em; /* フォントサイズを小さくする */
+  color: #999999; /* グレーの色 */
+}
+
 .message strong {
   color: #66ccff;
 }
@@ -155,4 +163,3 @@ html, body {
     transform: none; /* 位置の調整をリセット */
   }
 }
-
