@@ -74,20 +74,25 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 
 		err = database.AddUser(msg.Name)
 		if err != nil {
-			log.Printf("Failed to add user: %v\n", err)
+			log.Printf("Failed to add user: %v", err)
 			continue
 		}
 
 		userID, err := database.GetUserID(msg.Name)
 		if err != nil {
-			log.Printf("Failed to get user ID: %v\n", err)
+			log.Printf("Failed to get user ID: %v", err)
 		}
 
 		err = database.AddMessage(userID, msg.InputMessage)
 		if err != nil {
-			log.Printf("Failed to add message: %v\n", err)
-			continue
+			log.Printf("Failed to add message: %v", err)
 		}
+
+		time, err := database.GetTime(userID)
+		if err != nil {
+			log.Printf("Failed to get time: %v", err)
+		}
+		msg.Timestamp = time
 
 		// 受け取ったメッセージをbroadcastチャネルに送信
 		broadcast <- msg
