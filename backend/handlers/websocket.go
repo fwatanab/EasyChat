@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"easychat/database"
+	"easychat/models"
 	"log"
 	"net/http"
 
@@ -18,17 +20,16 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
+type Client struct {
+	conn                *websocket.Conn
+	initialMessagesSent bool
+}
+
 // 接続中のクライアントを保持するマップ
-var clients = make(map[*websocket.Conn]bool)
+var clients = make(map[*websocket.Conn]*Client)
 
 // メッセージをブロードキャストするためのチャネル
-var broadcast = make(chan Message)
-
-// WebSocketで送受信されるメッセージの構造体
-type Message struct {
-	Name         string `json:"name"`
-	InputMessage string `json:"inputMessage"`
-}
+var broadcast = make(chan models.Message)
 
 // 新しいWebSocket接続を処理
 func HandleConnections(w http.ResponseWriter, r *http.Request) {
@@ -40,10 +41,25 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 	defer ws.Close()
 
 	// 接続をclientsマップに追加
-	clients[ws] = true
+	client := &Client{conn: ws, initialMessagesSent: false}
+	clients[ws] = client
+
+	if !client.initialMessagesSent {
+		initialMessages, err := database.GetMessages()
+		if err != nil {
+			log.Printf("Failed to get initial messages: %v\n", err)
+		} else {
+			err := ws.WriteJSON(&initialMessages)
+			if err != nil {
+				log.Printf("Failed to send initial messages: %v\n", err)
+			} else {
+				client.initialMessagesSent = true
+			}
+		}
+	}
 
 	for {
-		var msg Message
+		var msg models.Message
 		// クライアントからメッセージを受け取る
 		err := ws.ReadJSON(&msg)
 		if err != nil {
@@ -55,6 +71,23 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 		// デバッグ用プリント
 		//		log.Printf("Received message: %+v", msg)
 		//		log.Printf("name: %s message: %s\n", msg.Name, msg.InputMessage)
+
+		err = database.AddUser(msg.Name)
+		if err != nil {
+			log.Printf("Failed to add user: %v\n", err)
+			continue
+		}
+
+		userID, err := database.GetUserID(msg.Name)
+		if err != nil {
+			log.Printf("Failed to get user ID: %v\n", err)
+		}
+
+		err = database.AddMessage(userID, msg.InputMessage)
+		if err != nil {
+			log.Printf("Failed to add message: %v\n", err)
+			continue
+		}
 
 		// 受け取ったメッセージをbroadcastチャネルに送信
 		broadcast <- msg
