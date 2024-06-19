@@ -1,12 +1,14 @@
 package main
 
 import (
+	"easychat/database"
+	"easychat/handlers"
 	"log"
 	"net/http"
-	"easychat/handlers"
 )
 
 func main() {
+	database.InitDB("root:Ftsg0601_348441@tcp(127.0.0.1:3306)/")
 	// '/ws'エンドポイントへのリクエストを'handleConnections'で処理
 	http.HandleFunc("/ws", handlers.HandleConnections)
 	// 別のゴルーチンで'handleMessages'を実行
